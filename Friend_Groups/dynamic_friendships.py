@@ -2,6 +2,7 @@ class FriendGroups:
     def __init__(self, n):
         self.total_people = n
         self.parent = [-1 for _ in range(n)]
+        self.group_count = n
 
     def find(self, v):
         while self.parent[v] != -1:
@@ -16,14 +17,11 @@ class FriendGroups:
         root_j = self.find(j)
         if root_i != root_j:
             self.parent[root_j] = root_i
+            self.group_count -= 1
 
-    # O(n) still, because we need to count -1's
+    # O(1). just return group_count
     def get_group_count(self):
-        group_count = 0
-        for item in self.parent:
-            if item == -1:
-                group_count += 1
-        return group_count
+        return self.group_count
 
     # hard problem, the Union-Find data structure doesnt support this
     # reason : (i, j) are no longer friends, but that doesn't mean group has split
